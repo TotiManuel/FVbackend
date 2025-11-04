@@ -82,7 +82,8 @@ def subir_estudio():
     cursor.execute("""
         INSERT INTO estudios (dni, numero_estudio, nombre, archivo, fecha)
         VALUES (?, ?, ?, ?, ?)
-    """, (dni, numero, nombre, f"/estudios/{filename}", fecha))
+    """, (dni, numero, nombre, f"https://api-fusavim.onrender.com/estudios/{filename}"
+, fecha))
     conn.commit()
     conn.close()
 
