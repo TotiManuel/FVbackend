@@ -57,6 +57,32 @@ def obtener_estudios():
     ]
     return jsonify(estudios)
 
+# --- Listar todos los estudios ---
+@app.route("/api/estudios/todos", methods=["GET"])
+def listar_todos_estudios():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT id, dni, numero_estudio, nombre, archivo, fecha
+        FROM estudios
+        ORDER BY fecha DESC
+    """)
+    resultados = cursor.fetchall()
+    conn.close()
+
+    estudios = [
+        {
+            "id": r[0],
+            "dni": r[1],
+            "numero_estudio": r[2],
+            "nombre": r[3],
+            "archivo": r[4],
+            "fecha": r[5]
+        }
+        for r in resultados
+    ]
+    return jsonify(estudios)
+
 
 # --- Subir nuevo estudio ---
 @app.route("/api/estudios", methods=["POST"])
